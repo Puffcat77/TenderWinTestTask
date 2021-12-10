@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleVersion.Models;
+using System;
 
 namespace ConsoleVersion
 {
@@ -6,9 +7,7 @@ namespace ConsoleVersion
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter tender number:");
-            string tenderNumber = "";
-            
+            UI.Run();
         }
     }
 }
