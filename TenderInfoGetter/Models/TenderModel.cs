@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json.Serialization;
 
-namespace ConsoleVersion.Models
+namespace TenderInfoGetter.Models
 {
     public class TenderModel
     {

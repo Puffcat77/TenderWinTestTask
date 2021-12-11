@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace ConsoleVersion.Configuration
+namespace TenderInfoGetter.Configuration
 {
     public static class Offsets
     {

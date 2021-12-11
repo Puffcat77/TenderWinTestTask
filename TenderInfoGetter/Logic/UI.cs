@@ -1,8 +1,8 @@
-﻿using ConsoleVersion.Models;
+﻿using TenderInfoGetter.Models;
 using System;
 using System.Collections.Generic;
 
-namespace ConsoleVersion.Logic
+namespace TenderInfoGetter.Logic
 {
     public static class UI
     {

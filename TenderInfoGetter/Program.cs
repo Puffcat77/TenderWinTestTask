@@ -1,6 +1,6 @@
-﻿using ConsoleVersion.Logic;
+﻿using TenderInfoGetter.Logic;
 
-namespace ConsoleVersion
+namespace TenderInfoGetter
 {
     class Program
     {

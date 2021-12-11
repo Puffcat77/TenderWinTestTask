@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ConsoleVersion.Models
+namespace TenderInfoGetter.Models
 {
     public class TenderNotification
     {

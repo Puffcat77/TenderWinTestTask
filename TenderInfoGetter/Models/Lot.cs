@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace ConsoleVersion.Models
+namespace TenderInfoGetter.Models
 {
     public class Lot
     {

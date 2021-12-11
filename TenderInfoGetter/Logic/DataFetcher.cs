@@ -1,12 +1,12 @@
-﻿using ConsoleVersion.Configuration;
-using ConsoleVersion.Models;
+﻿using TenderInfoGetter.Configuration;
+using TenderInfoGetter.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ConsoleVersion.Logic
+namespace TenderInfoGetter.Logic
 {
     public static class DataFetcher
     {

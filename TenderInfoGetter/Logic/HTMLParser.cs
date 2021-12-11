@@ -1,12 +1,12 @@
-﻿using ConsoleVersion.Configuration;
-using ConsoleVersion.Models;
+﻿using TenderInfoGetter.Configuration;
+using TenderInfoGetter.Models;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 
-namespace ConsoleVersion.Logic
+namespace TenderInfoGetter.Logic
 {
     public static class HTMLParser
     {

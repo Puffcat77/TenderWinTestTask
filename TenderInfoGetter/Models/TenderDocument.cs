@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ConsoleVersion.Models
+namespace TenderInfoGetter.Models
 {
     public class TenderDocument
     {
