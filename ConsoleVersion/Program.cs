@@ -4,7 +4,7 @@ namespace ConsoleVersion
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             System.Console.OutputEncoding = System.Text.Encoding.UTF8;
             UI.Run();
