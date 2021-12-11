@@ -1,13 +1,8 @@
-﻿using HtmlAgilityPack;
+﻿using ConsoleVersion.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace ConsoleVersion.Models
+namespace ConsoleVersion.Logic
 {
     public static class UI
     {
@@ -20,7 +15,7 @@ namespace ConsoleVersion.Models
                 int number = ReadTenderNumber();
                 tenders = HTMLParser.GetAllTendersById(number);
                 if (tenders.Count == 0)
-                    PrintError("Тенедеры не найдены!");
+                    PrintError("Тенедер не найден!");
                 else 
                 {
                     foreach (var tender in tenders)
@@ -28,7 +23,7 @@ namespace ConsoleVersion.Models
                         tender.Notification = HTMLParser.GetTenderNotification(tender.Id);
                         tender.Documentation = HTMLParser.GetTenderDocumentation(tender.Id);
                     }
-                    Console.WriteLine("Тендеров по этому номеру:");
+                    Console.WriteLine("Информация о тендере:");
                     foreach (var tender in tenders)
                         PrintTenderInfo(tender);
                 }
@@ -39,9 +34,9 @@ namespace ConsoleVersion.Models
 
         private static bool CheckIsFinished() 
         {
-            Console.WriteLine("Продолжить?y(д)/n(н):");
+            Console.WriteLine("Продолжить? (Введите да(д)/yes(y), чтобы подолжить):");
             string input = Console.ReadLine();
-            return input != "д" && input != "y";
+            return !new HashSet<string> { "да", "д", "yes", "y" }.Contains(input);
         }
 
         private static void PrintTenderInfo(TenderModel tender)
@@ -72,6 +67,7 @@ namespace ConsoleVersion.Models
                 if (!isValid)
                     PrintError("Номер тендера должен быть неотрицательным целым числом!");
             }
+            Console.WriteLine("Загружаем данные о тендере...");
             return n;
         }
     }

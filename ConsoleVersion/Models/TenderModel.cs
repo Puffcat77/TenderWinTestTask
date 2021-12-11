@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -7,9 +8,9 @@ namespace ConsoleVersion.Models
 {
     public class TenderModel
     {
-        [JsonPropertyName("TradeState")]
+        [JsonPropertyName("TradeStateName")]
         // текущий статус
-        public int TradeState { get; set; }
+        public string TradeState { get; set; }
 
         [JsonPropertyName("CustomerFullName")]
         // наименование заказчика
@@ -66,7 +67,7 @@ namespace ConsoleVersion.Models
                 $"-Наименование тендера: {TradeName}\n" +
                 $"-Текущий статус: {TradeState}\n" +
                 $"-Наименование заказчика: {CustomerFullName}\n" +
-                $"-НМЦ(начальная максимальная цена): {InitialPrice.Value}\n" +
+                $"-НМЦ(начальная максимальная цена): {InitialPrice.Value.ToString("C2", CultureInfo.CurrentCulture)}\n" +
                 $"-Дата публикации: {PublicationDate.DateTime}\n" +
                 $"-Дата окончания подачи заявок: {FillingApplicationEndDate.DateTime}\n" +
                 $"{Notification}" +

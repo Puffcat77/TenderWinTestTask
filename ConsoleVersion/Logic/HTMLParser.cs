@@ -1,12 +1,10 @@
-﻿using HtmlAgilityPack;
-using System;
+﻿using ConsoleVersion.Models;
+using HtmlAgilityPack;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace ConsoleVersion.Models
+namespace ConsoleVersion.Logic
 {
     public static class HTMLParser
     {
@@ -37,20 +35,20 @@ namespace ConsoleVersion.Models
         {
             List<Lot> lots = new List<Lot>();
             var lotContainers = document.DocumentNode
-                        .SelectNodes(HTMLConfig.lotsXPath);
+                        .SelectNodes(HTMLParts.lotsXPath);
             int lotCount = lotContainers.Count();
             var requiredTags = document.DocumentNode
-                .SelectNodes(HTMLConfig.lotsXPath + "/div//p")
+                .SelectNodes(HTMLParts.lotsXPath + "/div//p")
                 .Where(tag => tag.SelectNodes(".//span")
                     .Any(span =>
-                            HTMLConfig.requiredFields
+                            HTMLParts.requiredFields
                             .Any(field => span.InnerText.Replace(":", "").StartsWith(field))
                     )
                 );
             Lot lot;
             for (int i = 0; i < lotCount; i++)
             {
-                var tags = requiredTags.Skip(HTMLConfig.requiredFields.Count * i).Take(HTMLConfig.requiredFields.Count);
+                var tags = requiredTags.Skip(HTMLParts.requiredFields.Count * i).Take(HTMLParts.requiredFields.Count);
                 lot = FillLotWithTags(tags);
                 lots.Add(lot);
             }
@@ -66,16 +64,16 @@ namespace ConsoleVersion.Models
             {
                 span = tag.SelectSingleNode(".//span").InnerText.Replace(":", "");
                 text = tag.ChildNodes.Last().InnerText.Trim();
-                if (span.StartsWith(HTMLConfig.lotName)) lot.Name = text;
-                else if (span.StartsWith(HTMLConfig.measureUnits)) lot.MeasurementUnits = text;
-                else if (span.StartsWith(HTMLConfig.amount))
+                if (span.StartsWith(HTMLParts.lotName)) lot.Name = text;
+                else if (span.StartsWith(HTMLParts.measureUnits)) lot.MeasurementUnits = text;
+                else if (span.StartsWith(HTMLParts.amount))
                     if (!double.TryParse(text.Replace(".", ","), out doubleVal))
-                        UI.PrintError("Количество не указано как число с запятой");
+                        UI.PrintError(ConfigurationManager.AppSettings["amountUndefined"]);
                     else
                         lot.Amount = doubleVal;
-                else
+                else if (span.StartsWith(HTMLParts.unitCost))
                     if (!double.TryParse(text.Replace(".", ","), out doubleVal))
-                        UI.PrintError("Цена за единицу не указана как число с запятой");
+                    UI.PrintError(ConfigurationManager.AppSettings["unitCostUndefined"]);
                     else
                         lot.CostPerUnit = doubleVal;
             }
@@ -85,12 +83,12 @@ namespace ConsoleVersion.Models
         private static string GetDeliveryPlace(HtmlDocument document)
         {
             var placeOfDelivery = document.DocumentNode
-                        .SelectNodes(HTMLConfig.deliveryPlaceXPath)
+                        .SelectNodes(HTMLParts.deliveryPlaceXPath)
                         .FirstOrDefault(node =>
                             node.ChildNodes
                             .FirstOrDefault(child => child.Name == "span")
                             .InnerText
-                            .Contains("Место поставки:"))
+                            .Contains(ConfigurationManager.AppSettings["deliveryPlace"]))
                         .ChildNodes.FirstOrDefault(child => child.Name == "p").InnerText;
             return placeOfDelivery;
         }

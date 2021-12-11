@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ConsoleVersion.Models;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ConsoleVersion.Models
+namespace ConsoleVersion.Logic
 {
     public static class DataFetcher
     {
@@ -51,7 +52,7 @@ namespace ConsoleVersion.Models
                 {
                     models = JsonSerializer.Deserialize<TenderListModel>(reponseContent).Invdata;
                     foreach (var model in models)
-                        model.ConvertTimeToLocal(AppConfig.NovosibirskOffset);
+                        model.ConvertTimeToLocal(Offsets.NovosibirskOffset);
                 }
                 catch (Exception ex) { UI.PrintError(ex.Message); }
             return models;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace ConsoleVersion.Models
@@ -19,8 +20,8 @@ namespace ConsoleVersion.Models
         {
             return $"\t\t-Название: {Name}\n" +
                 $"\t\t-Единицы измерения: {MeasurementUnits}\n" +
-                $"\t\t-Цена за единицу: {CostPerUnit:2}\n" +
-                $"\t\t-Количество: {Amount:2}\n";
+                $"\t\t-Цена за единицу: {CostPerUnit.ToString("C2", CultureInfo.CurrentCulture)}\n" +
+                $"\t\t-Количество: {Amount:f2}\n";
         }
     }
 }

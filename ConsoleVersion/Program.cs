@@ -1,5 +1,5 @@
-﻿using ConsoleVersion.Models;
-using System;
+﻿using ConsoleVersion.Logic;
+using System.Globalization;
 
 namespace ConsoleVersion
 {
@@ -7,6 +7,7 @@ namespace ConsoleVersion
     {
         static void Main(string[] args)
         {
+            System.Console.OutputEncoding = System.Text.Encoding.UTF8;
             UI.Run();
         }
     }
