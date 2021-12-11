@@ -17,11 +17,7 @@ namespace ConsoleVersion.Logic
             {
                 return JsonSerializer.Deserialize<List<TenderDocument>>(await GetResponseFromUri(URLPaths.GetTenderDocumentationURL(id))); ;
             }
-            catch (Exception ex)
-            {
-                FormErrorMessage("документации", ex.Message);
-                return new List<TenderDocument>();
-            }
+            catch (Exception ex) { throw FormErrorMessage("документации", ex.Message); }
         }
 
         public static async Task<string> GetTenderNotificationHtml(int id)
@@ -30,37 +26,30 @@ namespace ConsoleVersion.Logic
             {
                 return await GetResponseFromUri(URLPaths.GetTenderNotification(id));
             }
-            catch (Exception ex)
-            {
-                FormErrorMessage("извещения", ex.Message);
-                return "";
-            }
+            catch (Exception ex) { throw FormErrorMessage("извещения", ex.Message); }
         }
 
         public static async Task<List<TenderModel>> PostTendersById(int id)
         {
-            List<TenderModel> models = new List<TenderModel>();
+            List<TenderModel> models;
             var request = new Dictionary<string, string> { { "page", "1" }, { "itemsPerPage", "10" }, { "Id", $"{id}" } };
             var response = await httpClient.PostAsync(URLPaths.GetTendersByPeriodURL(), new FormUrlEncodedContent(request));
             var reponseContent = await response.Content.ReadAsStringAsync();
             if (((int)response.StatusCode) != 200)
+                throw new Exception(reponseContent);
+            try
             {
-                UI.PrintError(reponseContent);
+                models = JsonSerializer.Deserialize<TenderListModel>(reponseContent).Invdata;
+                foreach (var model in models)
+                    model.ConvertTimeToLocal(Offsets.NovosibirskOffset);
             }
-            else
-                try
-                {
-                    models = JsonSerializer.Deserialize<TenderListModel>(reponseContent).Invdata;
-                    foreach (var model in models)
-                        model.ConvertTimeToLocal(Offsets.NovosibirskOffset);
-                }
-                catch (Exception ex) { UI.PrintError(ex.Message); }
+            catch (Exception ex) { throw ex; }
             return models;
         }
 
-        private static void FormErrorMessage(string fetchingData, string message)
+        private static Exception FormErrorMessage(string fetchingData, string message)
         {
-            UI.PrintError($"Произошла ошибка при получении {fetchingData}:\n{message}"); ;
+            throw new Exception($"Произошла ошибка при получении {fetchingData}:\n{message}"); ;
         }
 
         private static async Task<string> GetResponseFromUri(Uri uri)
@@ -68,10 +57,7 @@ namespace ConsoleVersion.Logic
             HttpResponseMessage response = await httpClient.GetAsync(uri);
             string responseResult = await response.Content.ReadAsStringAsync();
             if (((int)response.StatusCode) != 200)
-            {
-                UI.PrintError(responseResult);
-                return "";
-            }
+                throw new Exception(responseResult);
             return responseResult;
         }
     }

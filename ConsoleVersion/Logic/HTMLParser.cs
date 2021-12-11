@@ -1,6 +1,7 @@
 ﻿using ConsoleVersion.Configuration;
 using ConsoleVersion.Models;
 using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -35,25 +36,30 @@ namespace ConsoleVersion.Logic
         private static List<Lot> GetLots(HtmlDocument document)
         {
             List<Lot> lots = new List<Lot>();
-            var lotContainers = document.DocumentNode
-                        .SelectNodes(HTMLParts.lotsXPath);
-            int lotCount = lotContainers.Count();
-            var requiredTags = document.DocumentNode
-                .SelectNodes(HTMLParts.lotsXPath + "/div//p")
-                .Where(tag => tag.SelectNodes(".//span")
-                    .Any(span =>
-                            HTMLParts.requiredFields
-                            .Any(field => span.InnerText.Replace(":", "").StartsWith(field))
-                    )
-                );
-            Lot lot;
-            for (int i = 0; i < lotCount; i++)
+            try
             {
-                var tags = requiredTags.Skip(HTMLParts.requiredFields.Count * i).Take(HTMLParts.requiredFields.Count);
-                lot = FillLotWithTags(tags);
-                lots.Add(lot);
+                var lotContainers = document.DocumentNode
+                        .SelectNodes(HTMLParts.lotsXPath);
+                int lotCount = lotContainers.Count();
+                var requiredTags = document.DocumentNode
+                    .SelectNodes(HTMLParts.lotsXPath + "/div//p")
+                    .Where(tag => tag.SelectNodes(".//span")
+                        .Any(span =>
+                                HTMLParts.requiredFields
+                                .Any(field => span.InnerText.Replace(":", "").StartsWith(field))
+                        )
+                    );
+                for (int i = 0; i < lotCount; i++)
+                {
+                    var tags = requiredTags.Skip(HTMLParts.requiredFields.Count * i).Take(HTMLParts.requiredFields.Count);
+                    lots.Add(FillLotWithTags(tags));
+                }
+                return lots;
             }
-            return lots;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private static Lot FillLotWithTags(IEnumerable<HtmlNode> tags)
@@ -63,27 +69,33 @@ namespace ConsoleVersion.Logic
             string span, text;
             foreach (var tag in tags)
             {
-                span = tag.SelectSingleNode(".//span").InnerText.Replace(":", "");
-                text = tag.ChildNodes.Last().InnerText.Trim();
-                if (span.StartsWith(HTMLParts.lotName)) lot.Name = text;
-                else if (span.StartsWith(HTMLParts.measureUnits)) lot.MeasurementUnits = text;
-                else if (span.StartsWith(HTMLParts.amount))
-                    if (!double.TryParse(text.Replace(".", ","), out doubleVal))
-                        UI.PrintError(ConfigurationManager.AppSettings["amountUndefined"]);
-                    else
-                        lot.Amount = doubleVal;
-                else if (span.StartsWith(HTMLParts.unitCost))
-                    if (!double.TryParse(text.Replace(".", ","), out doubleVal))
-                        UI.PrintError(ConfigurationManager.AppSettings["unitCostUndefined"]);
-                    else
-                        lot.CostPerUnit = doubleVal;
+                try
+                {
+                    span = tag.SelectSingleNode(".//span").InnerText.Replace(":", "");
+                    text = tag.ChildNodes.Last().InnerText.Trim();
+                    if (span.StartsWith(HTMLParts.lotName)) lot.Name = text;
+                    else if (span.StartsWith(HTMLParts.measureUnits)) lot.MeasurementUnits = text;
+                    else if (span.StartsWith(HTMLParts.amount))
+                        if (!double.TryParse(text.Replace(".", ","), out doubleVal))
+                            UI.PrintError(ConfigurationManager.AppSettings["amountUndefined"]);
+                        else
+                            lot.Amount = doubleVal;
+                    else if (span.StartsWith(HTMLParts.unitCost))
+                        if (!double.TryParse(text.Replace(".", ","), out doubleVal))
+                            UI.PrintError(ConfigurationManager.AppSettings["unitCostUndefined"]);
+                        else
+                            lot.CostPerUnit = doubleVal;
+                }
+                catch (Exception ex) { throw ex; }
             }
             return lot;
         }
 
         private static string GetDeliveryPlace(HtmlDocument document)
         {
-            var placeOfDelivery = document.DocumentNode
+            try
+            {
+                var placeOfDelivery = document.DocumentNode
                         .SelectNodes(HTMLParts.deliveryPlaceXPath)
                         .FirstOrDefault(node =>
                             node.ChildNodes
@@ -91,7 +103,9 @@ namespace ConsoleVersion.Logic
                             .InnerText
                             .Contains(ConfigurationManager.AppSettings["deliveryPlace"]))
                         .ChildNodes.FirstOrDefault(child => child.Name == "p").InnerText;
-            return placeOfDelivery;
+                return placeOfDelivery;
+            }
+            catch (Exception ex) { throw ex; }
         }
     }
 }

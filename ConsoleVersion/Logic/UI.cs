@@ -13,19 +13,26 @@ namespace ConsoleVersion.Logic
             while (true)
             {
                 int number = ReadTenderNumber();
-                tenders = HTMLParser.GetAllTendersById(number);
-                if (tenders.Count == 0)
-                    PrintError("Тенедер не найден!");
-                else
+                try
                 {
-                    foreach (var tender in tenders)
+                    tenders = HTMLParser.GetAllTendersById(number);
+                    if (tenders.Count == 0)
+                        PrintError("Тенедер не найден!");
+                    else
                     {
-                        tender.Notification = HTMLParser.GetTenderNotification(tender.Id);
-                        tender.Documentation = HTMLParser.GetTenderDocumentation(tender.Id);
+                        foreach (var tender in tenders)
+                        {
+                            tender.Notification = HTMLParser.GetTenderNotification(tender.Id);
+                            tender.Documentation = HTMLParser.GetTenderDocumentation(tender.Id);
+                        }
+                        Console.WriteLine("Информация о тендере:");
+                        foreach (var tender in tenders)
+                            PrintTenderInfo(tender);
                     }
-                    Console.WriteLine("Информация о тендере:");
-                    foreach (var tender in tenders)
-                        PrintTenderInfo(tender);
+                }
+                catch (Exception ex)
+                {
+                    PrintError(ex.Message);
                 }
                 if (CheckIsFinished()) break;
             }
