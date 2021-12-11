@@ -13,11 +13,11 @@ namespace ConsoleVersion.Models
 
         [JsonPropertyName("CustomerFullName")]
         // наименование заказчика
-        public string CustomerFullName { get; set; }
+        public string CustomerFullName { get; set; } = "";
 
         [JsonPropertyName("TradeName")]
         // наименование тендера
-        public string TradeName { get; set; }
+        public string TradeName { get; set; } = "";
 
         [JsonPropertyName("Id")]
         // номер тендера

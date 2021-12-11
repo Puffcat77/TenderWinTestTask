@@ -7,9 +7,9 @@ namespace ConsoleVersion.Models
     public class Lot
     {
         // Наименование
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
         // Ед.изм.
-        public string MeasurementUnits { get; set; }
+        public string MeasurementUnits { get; set; } = "";
         // Кол-во
         public double Amount { get; set; }
         // Цена за единицу

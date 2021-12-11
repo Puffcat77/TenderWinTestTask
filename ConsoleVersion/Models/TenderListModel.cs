@@ -14,6 +14,6 @@ namespace ConsoleVersion.Models
         [JsonPropertyName("totalrecords")]
         public int TotalRecords { get; set; }
         [JsonPropertyName("invdata")]
-        public List<TenderModel> Invdata { get; set; }
+        public List<TenderModel> Invdata { get; set; } = new List<TenderModel>();
     }
 }

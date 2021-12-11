@@ -6,8 +6,8 @@ namespace ConsoleVersion.Models
 {
     public class TenderNotification
     {
-        public string PlaceOfDelivery { get; set; }
-        public List<Lot> Lots{ get; set; }
+        public string PlaceOfDelivery { get; set; } = "";
+        public List<Lot> Lots { get; set; } = new List<Lot>();
 
         public override string ToString()
         {
