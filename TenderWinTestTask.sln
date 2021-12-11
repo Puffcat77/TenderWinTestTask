@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TenderInfoGetter", "ConsoleVersion\TenderInfoGetter.csproj", "{8909F29A-8D1E-4F3C-B3E9-92130A1F462E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TenderInfoGetter", "TenderInfoGetter\TenderInfoGetter.csproj", "{8909F29A-8D1E-4F3C-B3E9-92130A1F462E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
