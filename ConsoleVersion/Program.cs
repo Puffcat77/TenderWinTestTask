@@ -1,5 +1,4 @@
 ﻿using ConsoleVersion.Logic;
-using System.Globalization;
 
 namespace ConsoleVersion
 {

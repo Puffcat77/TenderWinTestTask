@@ -8,7 +8,7 @@ namespace ConsoleVersion.Logic
     {
         private static List<TenderModel> tenders = new List<TenderModel>();
 
-        public static void Run() 
+        public static void Run()
         {
             while (true)
             {
@@ -16,7 +16,7 @@ namespace ConsoleVersion.Logic
                 tenders = HTMLParser.GetAllTendersById(number);
                 if (tenders.Count == 0)
                     PrintError("Тенедер не найден!");
-                else 
+                else
                 {
                     foreach (var tender in tenders)
                     {
@@ -32,7 +32,7 @@ namespace ConsoleVersion.Logic
             Console.ResetColor();
         }
 
-        private static bool CheckIsFinished() 
+        private static bool CheckIsFinished()
         {
             Console.WriteLine("Продолжить? (Введите да(д)/yes(y), чтобы подолжить):");
             string input = Console.ReadLine();
@@ -54,7 +54,7 @@ namespace ConsoleVersion.Logic
             Console.ResetColor();
         }
 
-        private static int ReadTenderNumber() 
+        private static int ReadTenderNumber()
         {
             string numberStr = "";
             int n = 0;

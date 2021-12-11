@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace ConsoleVersion.Models
+namespace ConsoleVersion.Configuration
 {
     public static class URLPaths
     {

@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Models;
+﻿using ConsoleVersion.Configuration;
+using ConsoleVersion.Models;
 using HtmlAgilityPack;
 using System.Collections.Generic;
 using System.Configuration;
@@ -73,7 +74,7 @@ namespace ConsoleVersion.Logic
                         lot.Amount = doubleVal;
                 else if (span.StartsWith(HTMLParts.unitCost))
                     if (!double.TryParse(text.Replace(".", ","), out doubleVal))
-                    UI.PrintError(ConfigurationManager.AppSettings["unitCostUndefined"]);
+                        UI.PrintError(ConfigurationManager.AppSettings["unitCostUndefined"]);
                     else
                         lot.CostPerUnit = doubleVal;
             }

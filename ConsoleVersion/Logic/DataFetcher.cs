@@ -1,8 +1,8 @@
-﻿using ConsoleVersion.Models;
+﻿using ConsoleVersion.Configuration;
+using ConsoleVersion.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -30,7 +30,7 @@ namespace ConsoleVersion.Logic
             {
                 return await GetResponseFromUri(URLPaths.GetTenderNotification(id));
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 FormErrorMessage("извещения", ex.Message);
                 return "";

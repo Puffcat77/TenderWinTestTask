@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace ConsoleVersion.Models
@@ -54,7 +53,7 @@ namespace ConsoleVersion.Models
         public TenderNotification Notification { get; set; }
         public List<TenderDocument> Documentation { get; set; }
 
-        public void ConvertTimeToLocal(TimeSpan localOffset) 
+        public void ConvertTimeToLocal(TimeSpan localOffset)
         {
             PublicationDate = PublicationDate.ToOffset(localOffset);
             LastModificationDate = LastModificationDate.ToOffset(localOffset);
@@ -71,7 +70,7 @@ namespace ConsoleVersion.Models
                 $"-Дата публикации: {PublicationDate.DateTime}\n" +
                 $"-Дата окончания подачи заявок: {FillingApplicationEndDate.DateTime}\n" +
                 $"{Notification}" +
-                $"-Документация:\n{String.Join("",Documentation)}";
+                $"-Документация:\n{String.Join("", Documentation)}";
         }
     }
 }

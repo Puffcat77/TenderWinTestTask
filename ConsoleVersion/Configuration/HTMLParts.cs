@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
-using System.Text;
 
-namespace ConsoleVersion.Models
+namespace ConsoleVersion.Configuration
 {
     public static class HTMLParts
     {
@@ -13,7 +11,7 @@ namespace ConsoleVersion.Models
         public static readonly string measureUnits = ConfigurationManager.AppSettings["measureUnits"];
         public static readonly string amount = ConfigurationManager.AppSettings["amount"];
         public static readonly string unitCost = ConfigurationManager.AppSettings["unitCost"];
-        public static readonly HashSet<string> requiredFields = new HashSet<string> 
+        public static readonly HashSet<string> requiredFields = new HashSet<string>
         {
             lotName,
             measureUnits,

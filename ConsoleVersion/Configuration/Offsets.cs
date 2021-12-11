@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Text;
 
-namespace ConsoleVersion.Models
+namespace ConsoleVersion.Configuration
 {
     public static class Offsets
     {
-        public static readonly TimeSpan NovosibirskOffset = 
+        public static readonly TimeSpan NovosibirskOffset =
             TimeSpan.FromHours(int.Parse(ConfigurationManager.AppSettings["novosibirskOffsetFromUtc"]));
 
         public static readonly TimeSpan MoscowOffset =
